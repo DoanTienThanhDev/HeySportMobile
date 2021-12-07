@@ -1,18 +1,21 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-interface HomeProps{
-    componentId: string;
+import RNView from '../components/cores/RNView';
+
+import RNHeaderPage from '../components/cores/RNHeaderPage';
+
+interface HomeProps {
+  componentId: string;
 }
-const Home = ({componentId}: HomeProps) => {
-    return (
-        <View>
-            <Text>Home</Text>
-            <Icon name="user"/>
-        </View>
-    )
-}
+const Home = ({ componentId }: HomeProps) => {
+  return (
+    <RNView isLoading={false}>
+      <RNHeaderPage title="Notification" iconRight="trash" />
+      <Text>Home</Text>
+      <Icon name="user" size={20} />
+    </RNView>
+  );
+};
 
 export default Home;
-
-const styles = StyleSheet.create({})
