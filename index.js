@@ -12,8 +12,11 @@ import Home from './src/Home';
         children: [
             {
              component: {
-                name: 'Home'
-            }
+                  name: 'Home',
+                  options: {
+                   topBar:{visible:false}
+                }
+               }
           }
           ]
        }

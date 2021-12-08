@@ -96,6 +96,14 @@
 			name = HeySport;
 			sourceTree = "<group>";
 		};
+		19D31BF4EE184B6E823EE917 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		1F98B3A7C6CFF2825C084A76 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,14 +157,6 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
-		};
-		19D31BF4EE184B6E823EE917 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
