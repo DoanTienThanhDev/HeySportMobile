@@ -7,7 +7,8 @@ const Colors = {
     blackB40: 'rgba(0,0,0,0.7)',
     blackB50: 'rgba(0,0,0,0.8)',
     blackB90: 'rgba(0, 0, 0, 0.9)',
-    black10: '#C9C9C9'
+    black10: '#C9C9C9',
+    white: '#FFFFFF',
   
 };
 export default Colors;

@@ -1,25 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View, ViewProps, ActivityIndicator } from 'react-native';
-import Utils from '../../utils';
-import { Colors } from '../../themes';
+import { TouchableOpacity, StyleSheet, TouchableOpacityProps } from 'react-native';
 
-interface RNViewProps extends ViewProps {
+export interface RNTouchableProps extends TouchableOpacityProps {
   fill?: boolean;
-  bgColorIndicator?: string;
-  bgColorLoading?: string;
-  isLoading?: boolean;
   children?: React.ReactNode;
   row?: boolean;
-  column?: boolean;
   alignCenter?: boolean;
   justifyCenter?: boolean;
   center?: boolean;
-  wrap?: boolean;
   style?: any;
   mTop?: number;
   mBottom?: number;
-  mLeft?: number | string;
-  mRight?: number | string;
+  mLeft?: number;
+  mRight?: number;
   pTop?: number;
   pBottom?: number;
   pLeft?: number;
@@ -29,6 +22,8 @@ interface RNViewProps extends ViewProps {
   mHoz?: number;
   mVer?: number;
   color?: string;
+  borderBottomWidth?: number;
+  borderBottomColor?: string;
   h?: number | string;
   w?: number | string;
   maxHeight?: number | string;
@@ -41,27 +36,17 @@ interface RNViewProps extends ViewProps {
   justifyContent?: string;
   alignItems?: string;
   selfCenter?: boolean;
-  absolute?: boolean;
-  opacity?: number;
-  aTop?: number;
-  aBottom?: number;
-  aLeft?: number;
-  aRight?: number;
-  tabLabel?: string;
-  margin?: number;
-  borderTopRightRadius?: number;
-  borderTopLeftRadius?: number;
-  borderBottomWidth?: number;
-  borderBottomLeftRadius?: number;
-  borderBottomRightRadius?: number;
-  borderBottomColor?: string;
+  hit?: number;
+  column?: boolean;
+  activeOpacity?: number;
+  onPress?: () => void;
+  disabled?: boolean;
 }
 
-const RNView = ({
+const RNTouchable = ({
   fill,
   children,
   row,
-  column,
   alignCenter,
   justifyCenter,
   center,
@@ -85,39 +70,27 @@ const RNView = ({
   borderWidth,
   borderColor,
   justifyContent,
-  alignItems,
-  selfCenter,
-  absolute,
-  opacity,
-  aTop = 0,
-  aBottom = 0,
-  aRight = 0,
-  aLeft = 0,
-  margin,
-  borderTopRightRadius,
-  borderTopLeftRadius,
   borderBottomWidth,
   borderBottomColor,
-  borderBottomLeftRadius,
-  borderBottomRightRadius,
-  wrap,
-  isLoading,
-  bgColorIndicator,
-  bgColorLoading,
+  alignItems,
+  selfCenter,
   maxHeight,
   minHeight,
   minWidth,
   maxWidth,
+  onPress,
+  activeOpacity,
+  hit,
+  disabled,
+  column,
   ...more
-}: RNViewProps) => {
+}: RNTouchableProps) => {
   return (
-    <View
+    <TouchableOpacity
       {...more}
       style={[
-        { backgroundColor: isLoading ? Colors.blackB30 : '#FFFFFF' },
         fill && styles.fill,
         row && styles.row,
-        column && styles.column,
         alignCenter && styles.alignCenter,
         justifyCenter && styles.justifyCenter,
         center && styles.center,
@@ -133,13 +106,6 @@ const RNView = ({
         pVer && { paddingVertical: pVer },
         mHoz && { marginHorizontal: mHoz },
         mVer && { marginVertical: mVer },
-        margin && { margin },
-        borderBottomWidth && { borderBottomWidth },
-        borderBottomColor && { borderBottomColor },
-        borderTopRightRadius && { borderTopRightRadius },
-        borderTopLeftRadius && { borderTopLeftRadius },
-        borderBottomLeftRadius && { borderBottomLeftRadius },
-        borderBottomRightRadius && { borderBottomRightRadius },
         color && { backgroundColor: color },
         h && { height: h },
         w && { width: w },
@@ -147,49 +113,40 @@ const RNView = ({
         minHeight && { minHeight },
         minWidth && { minWidth },
         maxWidth && { maxWidth },
+        column && styles.column,
         borderRadius && { borderRadius: borderRadius },
         borderWidth && { borderWidth: borderWidth },
         borderColor && { borderColor: borderColor },
         justifyContent && { justifyContent: justifyContent },
         alignItems && { alignItems: alignItems },
         selfCenter && styles.selfCenter,
-        absolute && {
-          ...styles.absolute,
-          top: aTop,
-          bottom: aBottom,
-          right: aRight,
-          left: aLeft,
-        },
-        opacity && { opacity },
-        wrap && { flexWrap: 'wrap' },
-        style && style,
+        borderBottomWidth && { borderBottomWidth },
+        borderBottomColor && { borderBottomColor },
+        style,
       ]}
+      hitSlop={{
+        top: hit || 0,
+        bottom: hit || 0,
+        left: hit || 0,
+        right: hit || 0,
+      }}
+      onPress={onPress && onPress}
+      activeOpacity={activeOpacity || 0.3}
+      disabled={disabled && disabled}
     >
-      {isLoading && (
-        <View style={styles.loading}>
-          <ActivityIndicator size="large" color={Colors.primary} />
-        </View>
-      )}
       {children}
-    </View>
+    </TouchableOpacity>
   );
 };
-
-export default RNView;
 
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
   },
-  column: {
-    flexDirection: 'column',
-  },
   fill: {
     flex: 1,
   },
-  alignCenter: {
-    alignItems: 'center',
-  },
+  alignCenter: { alignItems: 'center' },
   justifyCenter: {
     justifyContent: 'center',
   },
@@ -197,21 +154,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  selfCenter: {
-    alignSelf: 'center',
-  },
-  absolute: {
-    position: 'absolute',
-  },
-  loading: {
-    width: Utils.isIOS ? 120 : 100,
-    height: Utils.isIOS ? 120 : 100,
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: Utils.SCREEN_HEIGHT / 2 - (Utils.isIOS ? 60 : 80),
-    left: Utils.SCREEN_WIDTH / 2 - (Utils.isIOS ? 60 : 50),
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-  },
+  column: { flexDirection: 'column' },
+  selfCenter: { alignSelf: 'center' },
 });
+
+export default RNTouchable;
